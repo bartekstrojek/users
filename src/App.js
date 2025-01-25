@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import Header from "./components/Header";
+import Main from "./components/Main";
 
 function App() {
   const [user, setUser] = useState("null");
@@ -6,18 +8,17 @@ function App() {
   const getData = () => {
     fetch("https://randomuser.me/api/")
       .then((res) => res.json())
-      .then((data) => console.log(data));
+      .then((data) => setUser(data.results[0]));
   };
   useEffect(() => {
+    
     getData();
   }, []);
-
+  
   return (
-    <div>
-      <h1>Name</h1>
-      <img src="null" alt="" />
-      <p>Mail</p>
-      <button onClick={getData}>Click</button>
+    <div className="app">
+      <Header user={user} />
+      <Main {...user} getData={getData} />
     </div>
   );
 }
